@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    {% load static %} <!-- Cargar estáticos aquí -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Asegúrate de que la ruta sea correcta -->
+</head>
+<body>
+    <div class="contenedor_registro">
+        <form method="post">
+            <h2>Formulario de Registro</h2>
+            {% csrf_token %}
+            {% for field in form %}
+                <p>
+                    {{ field.label_tag }}<br>
+                    {{ field }}<br>
+                    {% if field.help_text %}
+                        <small style="color: grey">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </p>
+            {% endfor %}
+            <button type="submit" class="btn_registro">Registrarse</button>
+        </form>
+    </div>
+</body>
+</html>

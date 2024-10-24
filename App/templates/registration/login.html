@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <title>Login</title>
+</head>
+<body>
+    <div class="contendor_login">
+        <img src="static '../../../../static/img/logo.png" alt="Logo de la marca">
+        <form action="" method="post">
+           <div class="logo_login">
+           </div>
+            <h1>Login</h1>
+            {% csrf_token %} 
+            {{ form }}
+            
+            <!-- Enlace para registrarse -->
+            <p class="registro_enlace">¿No tienes una cuenta? <a href="{% url 'register' %}">Regístrate aquí</a></p>
+            
+            <input class="btn_login" type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>

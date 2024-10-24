@@ -1,0 +1,424 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* -----> Configuracion de Index.html <----- */
+.encabezado {
+    /* Altura */
+    height: 70px;
+    /* Color de Fondo */
+    background: #e4e1df;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logotipo {
+    margin-left: 10px;
+    width: 70px;
+    height: 70px;
+}
+
+.menu_selectivo {
+    line-height: 65px;
+    margin-right: 10px;
+    background: #363636; /* Color de fondo al pasar el mouse */
+}
+
+.menu_selectivo a {
+    /* Margen Lateral derecho */
+    /* Redondear las Esquinas */
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #242323; /* Color de texto */
+    height: 100%;
+}
+
+.menu_selectivo a:hover {
+    padding: 10px;
+    border-radius: 10px;
+    color: #FCFCFC;
+}
+
+#contacto_btn {
+    padding: 10px;
+    border-radius: 10px;
+    background: #d08d80; /* Color de fondo del botón */
+    color: #FCFCFC;
+}
+
+.contenedor_general {
+    padding: 20px;
+}
+
+.intermedio img {
+    height: 75vh; 
+    width: 100%; 
+    object-fit: cover;
+}
+
+.principal_intermedio {
+    filter: contrast(120%); 
+    height: auto; 
+}
+
+
+.contenedor_index {
+    display: flex;
+    justify-content: space-between;
+    width: 1200px;
+    height: 650px;
+    margin: 0 auto;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.contenedor_index img {
+    width: 600px;
+    height: 450px;
+}
+
+.artitulo {
+    width: auto;
+    height: auto;
+    padding: 5px;
+}
+
+.artitulo h2 {
+    color: #747b69; /* Color del título */
+    font-size: 25px;
+    text-align: center;
+}
+
+.artitulo p {
+    line-height: 28px;
+    color: #343434;
+}
+
+footer {
+    margin-top: 5px;
+    height: 80px;
+    background-color: #ebd5c7; /* Color de fondo del footer */
+    display: flex;
+    justify-content: center;
+}
+
+footer img {
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+/* ---- Tarjetas Index ---- */
+.tarjetas_index {
+    display: flex;
+    justify-content: center;
+    grid-gap: 50px;
+    padding-bottom: 120px;
+    margin-top: -120px;
+}
+
+/* FLIP CARD */
+.tarjeta_volteo {
+    margin-top: 10%;
+    width: 250px;
+    height: 400px;
+    perspective: 2000px;
+}
+
+.tarjeta_volteo-front img {
+   margin-top: 20%;
+    border-radius: 20px;
+    max-width: 100%; 
+    max-height: 100%;
+}
+
+.tarjeta_volteo-interno {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 28px;
+    transition: all 550ms cubic-bezier(0.1, 0.22, 0.8, 1.13);
+    transform-style: preserve-3d;
+}
+
+.tarjeta_volteo-front,
+.tarjeta_volteo-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 28px;
+    backface-visibility: hidden;
+}
+
+.tarjeta_volteo-front {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tarjeta_volteo-back {
+    font-size: 1.25rem;
+    text-align: center;
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    background-color: #d08d80; /* Color de fondo de la parte trasera de la tarjeta */
+    transform: rotateY(180deg);
+    color: #ffffff; /* Color del texto en la parte trasera */
+}
+
+.tarjeta_volteo:hover .tarjeta_volteo-interno {
+    transform: rotateY(-180deg);
+}
+
+/* -----> Configuración del Sector Agregar <----- */
+.contendor_agregar {
+    width: 1200px;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #fcfcfc;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px; /* Espacio interno */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.contendor_agregar > form {
+    flex: 1 1 45%; /* Flexibilidad en el tamaño */
+    margin: 10px; /* Margen entre los elementos */
+    min-width: 300px; /* Ancho mínimo para cada elemento */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave para cada elemento */
+    border-radius: 10px; /* Bordes redondeados para los elementos */
+    padding: 15px; /* Espacio interno para los elementos */
+    background-color: #FFFFFF; /* Color de fondo para los elementos */
+}
+.contendor_agregar svg{
+    width: 38%;
+    object-fit: cover;
+}
+.contendor_agregar img{
+    width: 38%;
+    object-fit: scale-down;
+}
+.contendor_agregar form{
+    padding: 20px;
+    width: 62%;
+}
+
+.contendor_agregar form h1 {
+    font-size: 35px;
+    color: #747b69; /* Color del encabezado en el formulario */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contendor_agregar form textarea{
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 3px;
+    margin: 8px 0;
+    resize: none;
+    border: 1px 1px #555555;
+}
+.contendor_agregar form input{
+    width: 300px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 3px;
+    margin: 8px 0;
+    border: 1px 1px #555555;
+}
+.btn{
+   margin-top: 15px;
+   width: 99%;
+}
+
+.respuesta {
+    color: #747b69; /* Color de respuesta */
+    font-size: 18px;
+    font-style: italic;
+}
+
+/* -----> Configuración del Sector Visualizar <----- */
+.contenedor_visualizar {
+    display: flex;
+    justify-content: center;
+}
+
+.card {
+    margin-left: 15px;  
+}
+
+.card-title {
+    font-size: 18px;
+}
+
+.contacto_btl {
+    padding: 10px;
+    border-radius: 10px;
+    background: #747b69; /* Color de fondo del botón de contacto */
+    color: #FCFCFC;
+}
+
+.subtitulo_index {
+    font-size: 45px;
+    color: #395090;
+    text-align: center;
+    margin-bottom: 25px;
+}
+footer{
+    background-color: #EEEEEE;
+    height: fit-content;
+}
+/* -----> Configuración del Sector Login <----- */
+
+.contendor_login {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    height: 100vh; /*que el contenedor ocupe toda la altura de la ventana */
+}
+
+.contendor_login > form {
+    flex: 0 1 50%; 
+    margin: 10px; /* Margen entre los elementos */
+    min-width: 300px; /* Ancho mínimo para cada elemento */
+    max-width: 500px; /* Ancho máximo para limitar el tamaño del formulario */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 20px; /* Espacio interno para los elementos */
+    background-color: #d08d80; /* Color de fondo */
+}
+
+
+.contendor_login svg {
+    width: 38%;
+    object-fit: cover;
+}
+
+.contendor_login form {
+    padding: 40px;
+    width: 100%; /* Ajustado a 100% para el formulario interno */
+}
+
+.contendor_login form h1 {
+    font-size: 35px; 
+    color: #ffffff; /* Color del encabezado */
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+.contendor_login form textarea,
+.contendor_login form input {
+    width: calc(100% - 20px); /* Ajusta el ancho con el padding */
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px; /* Aumenta el padding */
+    margin: 8px 0;
+    border: 2px solid #b6b6b6; /* Borde*/
+    transition: border 0.3s; /* Transición al enfocar */
+}
+
+.contendor_login form textarea:focus,
+.contendor_login form input:focus {
+    border-color: #ffcfc6; /* Color del borde al enfocar */
+    outline: none; /* Quita el borde de enfoque predeterminado */
+}
+
+.btn_login {
+    margin-top: 15px;
+    width: 70%;
+    background-color: #ffffff; /* Color de fondo del botón */
+    color: #000000; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados para el botón */
+    padding: 10px; /* Espaciado interno */
+    font-size: 18px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor*/
+    transition: background-color 0.3s; /* Transición */
+}
+
+.btn_login:hover{
+    background-color: #ffe6e1;
+}
+
+/* -----> Configuración de Registro <----- */
+body {
+    font-family: Arial, Helvetica, sans-serif; /* Fuente para ambos formularios */
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Color de fondo  */
+}
+
+/* -----> Estilo para el contenedor de formularios <----- */
+.contenedor_registro {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+}
+
+.contenedor_registro > form {
+    flex: 1; /* Cambia el porcentaje a 100% */
+    margin: 10px; /* Margen entre los elementos */
+    max-width: 400px; /* Ancho máximo para el formulario */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 30px; /* Espacio interno para los elementos */
+    background-color: #ffffff; /* Color de fondo blanco para un contraste limpio */
+}
+
+/* Encabezados del formulario */
+.contenedor_registro form h2 {
+    font-size: 28px; 
+    color: #333333; /* Color del encabezado */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilo para campos de texto y textarea */
+.contenedor_registro form textarea,
+.contenedor_registro form input {
+    width: calc(100% - 20px); /* Ajusta el ancho con el padding */
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 12px; /* Aumenta el padding para más comodidad */
+    margin: 10px 0; /* Espacio vertical entre campos */
+    border: 2px solid #cccccc; /* Borde claro */
+    transition: border 0.3s; /* Transición suave al enfocar */
+}
+
+.contenedor_registro form textarea:focus,
+.contenedor_registro form input:focus {
+    border-color: #ff7f50; /* Color del borde al enfocar */
+    outline: none; /* Quita el borde de enfoque predeterminado */
+}
+
+/* Estilo para el botón */
+.btn_registro {
+    margin-top: 20px; /* Más espacio arriba del botón */
+    width: 75%; /* Aumenta el ancho del botón */
+    background-color: #ff7f50; /* Color de fondo del botón */
+    color: #ffffff; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados para el botón */
+    padding: 12px; /* Espaciado interno */
+    font-size: 18px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+    transition: background-color 0.3s; /* Transición suave al pasar el ratón */
+}
+
+.btn_registro:hover {
+    background-color: #ff6347; /* Cambio de color al pasar el ratón */
+}
