@@ -25,7 +25,16 @@ class Carrito_detalle(models.Model):
     producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default=1)
     def __str__(self):
-        return self.carrito_det
+        return f"Carrito de {self.carrito_det.user} con el producto {self.producto.nom_producto}"
 class ImagenesProductos(models.Model):
     Imagen=models.ImageField(upload_to="productos")
     Codigo=models.ForeignKey(Productos,on_delete=models.CASCADE,related_name="Imagenes")
+class Compra(models.Model):
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Productos, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+    fecha = models.DateTimeField(auto_now_add=True)
+    precio_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return f"Compra de {self.producto.nom_producto} por {self.usuario.username}"

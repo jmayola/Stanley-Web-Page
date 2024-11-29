@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block intermedio %}
+    {% endblock %}
+
+    {% block cuerpo %}
+    <h1 class="compra-confirmada">Compra confirmada</h1>
+    <p class="mensaje-exito">Has comprado <strong>{{ producto.nom_producto }}</strong> con éxito.</p>
+    <p class="precio-total">Precio total: <strong>$ {{ compra.precio_total }}</strong></p>
+    <a href="{% url 'inicio' %}" class="volver-inicio">Volver al inicio</a>
+{% endblock %}

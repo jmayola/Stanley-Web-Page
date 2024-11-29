@@ -23,9 +23,9 @@
                   <h5 class="card-title">Precio: {{i.precio_producto}}</h5>
                   {% if i.stock_producto > 1 %}
                   <a
-                  href="{% url 'comprar' i.id_producto %}"
+                  href="{% url 'vermas' i.id_producto %}"
                     class="btn btn-primary">
-                    Comprar
+                    Agregar al Carrito
                 </a>
                   {% else %}
                   <a

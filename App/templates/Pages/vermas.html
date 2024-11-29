@@ -65,13 +65,15 @@
                           <div class="col-md-4 col-6 mb-3">
                             <label class="mb-2 d-block">Quantity</label>
                             <div class="input-group mb-3" style="width: 170px;">
-                              <input type="number" aria-valuemin="1" min="1" max="{{i.stock_producto}}" class="form-control text-center border border-secondary" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                              <input type="number" aria-valuemin="1" min="1" name="quantity" max="{{i.stock_producto}}" class="form-control text-center border border-secondary" placeholder="1" aria-label="Cantidad" aria-describedby="button-addon1">
                             </div>
+                            <span class="text-muted">{{i.stock_producto}} Disponibles</span>
+
                           </div>
                         </div>
-                        <a href="#" class="btn btn-warning shadow-0"> Buy now </a>
-                        <a href="#" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
-                        <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Save </a>
+                        <a href="{% url 'comprar' i.id_producto 1 %}" class="btn btn-warning shadow-0"> Comprar </a>
+                        <a href="{% url 'compcarrito' i.id_producto %}" class="btn btn-primary shadow-0"> <i class="me-1 fa fa-shopping-basket"></i> Añadir al Carrito </a>
+                        <a href="#" class="btn btn-light border border-secondary py-2 icon-hover px-3"> <i class="me-1 fa fa-heart fa-lg"></i> Añadir a Favoritos </a>
                       </div>
                     </main>
                   </div>

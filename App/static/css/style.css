@@ -45,7 +45,7 @@
 #contacto_btn {
     padding: 10px;
     border-radius: 10px;
-    background: #d08d80; /* Color de fondo del botón */
+    background: #DFDFDF; /* Color de fondo del botón */
     color: #FCFCFC;
 }
 
@@ -100,7 +100,7 @@
 footer {
     margin-top: 5px;
     height: 80px;
-    background-color: #ebd5c7; /* Color de fondo del footer */
+    background-color: #DFDFDF; /* Color de fondo del footer */
     display: flex;
     justify-content: center;
 }

@@ -1,0 +1,41 @@
+Trabajo Final
+    Nombre del Proyecto:
+
+         Stanley E-commerce
+
+    Profesor a Cargo:
+
+    Pablo Gareis
+
+    Año Lectivo:
+
+       2024
+
+Composicion Grupal
+
+        Julian Mayola (Fullstack y DevOps)
+
+Lista de tareas realizadas hasta ahora:
+
+    Presentacion de la pagina.
+    Header y Footer diseñados y establecidos.
+    Sistema de agregado, edicion y eliminacion de productos ya incluidos.
+    Sistema de visualizacion de producto de forma individual, y utilizacion de multiples imagenes incluido.
+    Filtrado de productos incluido.
+    Muestra de en stock y de producto sin stock (imposibilitando compras) incluido.
+    Filtros por tipo de usuario (no iniciado, comprador, administrador).
+    Obtencion de imagenes de productos para mostrar (mas de 10 de 300x300 y mas de 15 de 80x80) junto con nombres especificos y precios (se utilizó un web scrapper).
+
+Lista de tareas por realizar:
+
+    Disminucion de stock de los productos tras la compra.
+    Filtros por producto en la parte de listado de productos.
+    Funcionalidad de compra con metodos de pago virtuales.
+    Mejora del carrucel en la pantalla principal.
+
+Tareas opcionales restantes:
+
+    Sistema de puntuacion de productos.
+
+
+

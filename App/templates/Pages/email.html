@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block intermedio %}
+    {% endblock %}
+
+    <!-- Main -->
+    {% block cuerpo %}
+        <div
+            class="table-responsive"
+        >
+            <table
+                class="table table-primary"
+            >
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre:</th>
+                    </tr>
+
+                    <tr>
+                        <th scope="col">Email:</th>
+                    </tr>
+
+                    <tr>
+                        <th scope="col">Asunto:</th>
+                    </tr>
+
+                    <tr>
+                        <th scope="col">Mensaje:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="">
+                        <td scope="row">R1C1</td>
+                        <td>R1C2</td>
+                        <td>R1C3</td>
+                    </tr>
+                    <tr class="">
+                        <td scope="row">Item</td>
+                        <td>Item</td>
+                        <td>Item</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    {% endblock %}

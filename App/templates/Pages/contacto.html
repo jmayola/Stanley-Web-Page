@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block intermedio %}
+    {% endblock %}
+
+    <!-- Main -->
+    {% block cuerpo %}
+    <div class="mb-3">
+        <form action="{% url 'gmail' %}" method="post">
+            {% csrf_token %}
+        <label for="" class="form-label">Nombre</label>
+        <input
+            type="text"
+            class="form-control"
+            name="nombre"
+            id=""
+            aria-describedby="helpId"
+            placeholder=""
+        />
+        <small id="helpId" class="form-text text-muted">Ingresa tu nombre</small>
+        <label for="" class="form-label">Email</label>
+        <input
+            type="text"
+            class="form-control"
+            name="email"
+            id=""
+            aria-describedby="helpId"
+            placeholder=""
+        />
+        <small id="helpId" class="form-text text-muted">Ingresa tu Email de contacto</small>
+        <label for="" class="form-label">Asunto</label>
+        <input
+            type="text"
+            class="form-control"
+            name="asunto"
+            id=""
+            aria-describedby="helpId"
+            placeholder=""
+        />
+        <small id="helpId" class="form-text text-muted">Titulo del mail</small>
+        <label for="" class="form-label">Mensaje</label>
+        <input
+            type="text"
+            class="form-control"
+            name="mensaje"
+            id=""
+            aria-describedby="helpId"
+            placeholder=""
+        />
+        <small id="helpId" class="form-text text-muted">Pregunta o solicitud</small>
+        <input
+            name=""
+            id=""
+            class="btn btn-primary"
+            type="submit"
+            value="Enviar"
+        />
+        
+    </form>
+    </div>
+    
+
+    {% endblock %}

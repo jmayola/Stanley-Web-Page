@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block intermedio %}
+    {% endblock %}
+
+    {% block cuerpo %}
+    <h1 class="">Stock no disponible</h1>
+    <p class="mensaje-exito">Lo sentimos, no hay stock disponible para {{ producto.nom_producto }}.</p>
+    <a href="{% url 'inicio' %}" class="compra-confirmada">Volver al inicio</a>
+{% endblock %}
