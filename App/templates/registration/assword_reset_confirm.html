@@ -1,0 +1,6 @@
+<h2>Ingresa una Nueva Contraseña</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Restablecer Contraseña</button>
+</form>

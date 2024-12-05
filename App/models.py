@@ -7,7 +7,6 @@ class Productos(models.Model):
     nom_producto = models.TextField(max_length=50, null=False)
     desc_producto = fields.RichTextField(null=True)
     precio_producto = models.IntegerField(null=False)
-    precioreb_producto = models.IntegerField(null=True)
     stock_producto = models.IntegerField(null=False)
     imagen_producto = models.ImageField(null=False,upload_to="productos", default="")
     def __int__ (self):

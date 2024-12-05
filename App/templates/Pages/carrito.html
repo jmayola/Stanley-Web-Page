@@ -1,53 +1,53 @@
 {% extends 'index.html' %}
 
-    {% load static %}
+{% load static %}
 
-    {% block intermedio %}
-    {% endblock %}
+{% block intermedio %}
+{% endblock %}
 
-    <!-- Main -->
-    {% block cuerpo %}
-        <div class="contenedor_visualizar">
-            <!-- 
-                i-- Variable para el conteo
-                forms -- Palabra enviada desde "Data" para Traer los Datos
-                for -- Ciclo por Conteo
-                Desde el Primer Elemento hasta el Ultimo elemento
-            -->
-            {% if forms|length >= 1 %}
-    {% for i in forms %}
-        <div class="card" style="width: 18rem;">
-            <!-- Pasamos la Ruta de la Imagen Registrada -->
-            <img src="{{ i.producto.imagen_producto.url }}" class="card-img-top" alt="Imagen BD">
-            <div class="card-body">
-                <h4 class="card-title">Nombre: {{ i.producto.nom_producto }}</h4>
-                <h5 class="card-text">${{i.producto.precio_producto}}</h5>
-                  {% if i.producto.precioreb_producto != i.producto.precio_producto %}
-                  <h5 class="text-decoration-line-through">${{i.producto.precioreb_producto}}</h5>
-                  {% endif %}
+<!-- Main -->
+{% block cuerpo %}
+    <div class="contenedor_visualizar">
+        {% if forms|length >= 1 %}
+            {% for i in forms %}
+                <div class="card" style="width: 18rem;">
+                    <!-- Pasamos la Ruta de la Imagen Registrada -->
+                    <img src="{{ i.producto.imagen_producto.url }}" class="card-img-top" alt="Imagen BD">
+                    <div class="card-body">
+                        <h4 class="card-title">Nombre: {{ i.producto.nom_producto }}</h4>
+                        <h5 class="card-text">${{ i.producto.precio_producto }}</h5>
+                        <h5 class="card-text">Cantidad: {{ i.cantidad }}</h5>
+                    </div>
+                    <a
+                        id=""
+                        class="btn btn-danger"
+                        href="{% url 'carritoE' i.pk_carritodet %}"
+                        role="button"
+                    >Eliminar</a>
+                </div>
+            {% endfor %}
+            <!-- Botón para comprar todo el carrito -->
+            <div class="text-center mt-4" style="width: 18rem; display: flex; place-content: center; flex-direction: column; margin-left: 3rem; justify-content: space-between; background-color: #e0e0e0; padding: 2rem;">
+                <h4 class="subtitulo_index" style="border-bottom-width: 4px; border-left: 0px;border-top: 0px;border-right: 0px; border-color: #2b2b2b; border-style: solid;">Pagar</h4>
+                <form action="{% url 'comprar_todo_carrito' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Comprar Todo el Carrito</button>
+                </form>
             </div>
-            <a
-                id=""
-                class="btn btn-danger"
-                href="{% url 'carritoE' i.pk_carritodet %}"
-                role="button"
-            >Eliminar</a>
-        </div>
-    {% endfor %}
-{% else %}
-    <div class="card" style="width: 18rem;">
-        <img src="{% static 'img/logo.png' %}" class="card-img-top" alt="Imagen BD">
-        <div class="card-body">
-            <h5 class="card-title">No tienes productos añadidos al carrito!</h5>
-            <h5 class="card-title">Dirígete a la zona de productos para poder comenzar a comprar.</h5>
-        </div>
-        <a
-            id=""
-            class="btn btn-danger"
-            href="{% url 'visualizar' %}"
-            role="button"
-        >Ver Productos</a>
+        {% else %}
+            <div class="card" style="width: 18rem;">
+                <img src="{% static 'img/logo.png' %}" class="card-img-top" alt="Imagen BD">
+                <div class="card-body">
+                    <h5 class="card-title">No tienes productos añadidos al carrito!</h5>
+                    <h5 class="card-title">Dirígete a la zona de productos para poder comenzar a comprar.</h5>
+                </div>
+                <a
+                    id=""
+                    class="btn btn-danger"
+                    href="{% url 'visualizar' %}"
+                    role="button"
+                >Ver Productos</a>
+            </div>
+        {% endif %}
     </div>
-{% endif %}
-
-    {% endblock %}
+{% endblock %}

@@ -116,7 +116,52 @@ def EliminarCarrito (request,pk_carritodet):
     buscar=get_object_or_404(Carrito_detalle,pk_carritodet=pk_carritodet)
     buscar.delete()
     return redirect(to="visualizar")
+@login_required
+def comprar_todo_carrito(request):
+    # Obtener el carrito del usuario autenticado
+    carrito = get_object_or_404(Carrito, user=request.user)
     
+    # Obtener todos los detalles del carrito
+    detalles_carrito = Carrito_detalle.objects.filter(carrito_det=carrito)
+
+    # Lista para almacenar los resultados de las compras
+    resultados_compra = []
+
+    for detalle in detalles_carrito:
+        producto = detalle.producto
+        
+        # Verificar si hay suficiente stock para cada producto
+        if producto.stock_producto >= detalle.cantidad:
+            # Actualizar el stock del producto
+            producto.stock_producto -= detalle.cantidad
+            
+            # Crear la compra
+            try:
+                print((producto.nom_producto,detalle.cantidad,producto.precio_producto))
+                # compra = Compra.objects.create(
+                    # usuario=request.user,
+                    # producto=producto,
+                    # cantidad=detalle.cantidad,
+                    # precio_total=producto.precio_producto * detalle.cantidad
+                # )
+                # producto.save()  # Guardar el cambio en el stock
+                # resultados_compra.append(f"Has comprado {detalle.cantidad} de {producto.nom_producto} con éxito.")
+            except Exception as e:
+                print(e)
+                resultados_compra.append(f"No se ha podido comprar {producto.nom_producto}.")
+        else:
+            resultados_compra.append(f"Lo siento, no hay suficiente stock para {producto.nom_producto}.")
+
+    # Limpiar el carrito después de la compra
+    # detalles_carrito.delete()
+
+    # Mensaje final sobre la compra
+    if resultados_compra:
+        messages.success(request, "Resultados de tu compra: " + " | ".join(resultados_compra))
+    else:
+        messages.error(request, "No se realizaron compras.")
+
+    return redirect('visualizar')  # Redirigir a la página de visualización de productos o donde desees
 # Nueva vista para el registro de usuarios
 def register(request):
     if request.method == 'POST':
@@ -131,25 +176,34 @@ def register(request):
     else:
         form = SignUpForm()  # Crear un nuevo formulario vacío
     return render(request, 'registration/register.html', {'form': form})
-def Gmail (request):
-    if request.method =="POST":
-        nombre=request.POST["nombre"]
-        email=request.POST["email"]
-        asunto=request.POST["asunto"]
-        mensaje=request.POST["mensaje"]
-        plantilla=render_to_string("Pages/email.html",{
-            nombre:'nombre',
-            email:"email",
-            asunto:"asunto",
-            mensaje:"mensaje"
-        })
+def Gmail(request):
+    if request.method == "POST":
+        nombre = request.POST["nombre"]
+        email = request.POST["email"]
+        asunto = request.POST["asunto"]
+        mensaje = request.POST["mensaje"]
+
+        # Renderizar la plantilla con el contexto adecuado
+        plantilla = render_to_string("Pages/email.html", {
+            'nombre': nombre,
+            'email': email,
+            'asunto': asunto,
+            'mensaje': mensaje,
+        }, request=request)
+
         contenido = EmailMessage(
-            asunto,plantilla,settings,['julianmayola131@gmail.com']
+            asunto, plantilla, settings.EMAIL_HOST_USER, ['julianmayola131@gmail.com']
         )
-        contenido.content_subtype="html"
+        contenido.content_subtype = "html"
         contenido.send(fail_silently=True)
-        messages.success(request,'Datos enviados correctamente.')
+
+        messages.success(request, 'Datos enviados correctamente.')
         return redirect(to="inicio")
+
+    # Si no es un POST, renderiza el formulario o redirige
+    return render(request, 'Pages/contacto.html')  # Asegúrate de tener una plantilla para el formulario
+def Contacto (request):
+    return render(request,"Pages/contacto.html")
 def comprar_producto(request, id_producto,cantidad):
     producto = get_object_or_404(Productos, id_producto=id_producto)  # Busca el producto por código
 

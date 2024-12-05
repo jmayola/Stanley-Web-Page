@@ -7,7 +7,7 @@
 
     <!-- Main -->
     {% block cuerpo %}
-    <div class="mb-3">
+    <div class="mb-3" style="max-width: 60vw; display: flex; margin: auto; justify-content: center; flex-direction: column;">
         <form action="{% url 'gmail' %}" method="post">
             {% csrf_token %}
         <label for="" class="form-label">Nombre</label>
@@ -19,17 +19,15 @@
             aria-describedby="helpId"
             placeholder=""
         />
-        <small id="helpId" class="form-text text-muted">Ingresa tu nombre</small>
         <label for="" class="form-label">Email</label>
         <input
-            type="text"
+            type="email"
             class="form-control"
             name="email"
             id=""
             aria-describedby="helpId"
             placeholder=""
         />
-        <small id="helpId" class="form-text text-muted">Ingresa tu Email de contacto</small>
         <label for="" class="form-label">Asunto</label>
         <input
             type="text"
@@ -39,7 +37,6 @@
             aria-describedby="helpId"
             placeholder=""
         />
-        <small id="helpId" class="form-text text-muted">Titulo del mail</small>
         <label for="" class="form-label">Mensaje</label>
         <input
             type="text"
@@ -49,7 +46,6 @@
             aria-describedby="helpId"
             placeholder=""
         />
-        <small id="helpId" class="form-text text-muted">Pregunta o solicitud</small>
         <input
             name=""
             id=""

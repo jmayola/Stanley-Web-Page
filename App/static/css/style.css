@@ -271,7 +271,7 @@ footer img {
 
 .subtitulo_index {
     font-size: 45px;
-    color: #395090;
+    color: #2b2b2b;
     text-align: center;
     margin-bottom: 25px;
 }
@@ -284,9 +284,11 @@ footer{
 .contendor_login {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center; /* Centra el contenido horizontalmente */
     align-items: center; /* Centra el contenido verticalmente */
-    height: 100vh; /*que el contenedor ocupe toda la altura de la ventana */
+    min-height: 100vh;
+    height: 100%; /*que el contenedor ocupe toda la altura de la ventana */
 }
 
 .contendor_login > form {
@@ -332,7 +334,7 @@ footer{
 
 .contendor_login form textarea:focus,
 .contendor_login form input:focus {
-    border-color: #ffcfc6; /* Color del borde al enfocar */
+    border-color: #5c5c5c; /* Color del borde al enfocar */
     outline: none; /* Quita el borde de enfoque predeterminado */
 }
 
@@ -350,7 +352,7 @@ footer{
 }
 
 .btn_login:hover{
-    background-color: #ffe6e1;
+    background-color: #b9b9b9;
 }
 
 /* -----> Configuración de Registro <----- */
@@ -363,10 +365,11 @@ body {
 
 /* -----> Estilo para el contenedor de formularios <----- */
 .contenedor_registro {
+    margin-top:10px;
     display: flex;
     justify-content: center; /* Centra el contenido horizontalmente */
     align-items: center; /* Centra el contenido verticalmente */
-    height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+    min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
 }
 
 .contenedor_registro > form {

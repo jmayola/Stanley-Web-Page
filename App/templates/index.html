@@ -29,17 +29,17 @@
             <li class="nav-item"><a href="{% url 'inicio' %}" class="nav-link link-body-emphasis px-2 active" aria-current="page">Inicio</a></li>
             <li class="nav-item"><a href="{% url 'visualizar' %}" class="nav-link link-body-emphasis px-2">Productos</a></li>
             <li class="nav-item"><a href="#" class="nav-link link-body-emphasis px-2">Nosotros</a></li>
-            <li class="nav-item"><a href="" class="nav-link link-body-emphasis px-2">Contacto</a></li>
+            <li class="nav-item"><a href="{% url 'contacto' %}" class="nav-link link-body-emphasis px-2">Contacto</a></li>
             <li class="nav-item"><a href="{% url 'agregar' %}" class="nav-link link-body-emphasis px-2">Agregar</a></li>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="get">
-                <input type="search" class="form-control" name="filtro" placeholder="Buscar..." aria-label="Search">
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0" role="search" method="get" action="{% url 'visualizar' %}">
+                <input type="search"  class="form-control" name="filtro" placeholder="Buscar..." aria-label="Search">
               </form>
           </ul>
           <ul class="nav">
             {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link link-body-emphasis px-2" href="{% url 'logouts' %}" id="contacto_btn">Cerrar Sesión</a></li>
-            <li class="nav-item"><a class="nav-link link-body-emphasis px-2" href="{% url 'carrito' %}" id="contacto_btn">Carrito</a></li>
+            <li class="nav-item"><a class="nav-link link-body-emphasis px-2 mx-2" href="{% url 'carrito' %}" id="contacto_btn">Carrito</a></li>
             {% else %}
             <li class="nav-item"><a class="nav-link link-body-emphasis px-2" href="{% url 'login' %}" id="contacto_btn">Ingresar</a></li>
             {% endif %}
@@ -83,9 +83,6 @@
                 <div class="card-body">
                   <h4 class="card-title">{{i.nom_producto}}</h4>
                   <h5 class="card-text">${{i.precio_producto}}</h5>
-                  {% if i.precioreb_producto != i.precio_producto %}
-                  <h5 class="text-decoration-line-through">${{i.precioreb_producto}}</h5>
-                  {% endif %}
                   <a
             id=""
             class="btn btn-secondary"
