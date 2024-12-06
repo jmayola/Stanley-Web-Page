@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+    {% load static %}
+
+    {% block intermedio %}
+    {% endblock %}
+
+    {% block cuerpo %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .hero {
+            background-color: #007bff;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .section {
+            padding: 3rem 0;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+        .card {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>Bienvenido a Stanley 1913</h1>
+    <p>Más de un siglo de innovación y calidad en termos de acero inoxidable.</p>
+</div>
+
+<div class="container section">
+    <h2>Nuestra Historia</h2>
+    <p>Stanley fue fundada en 1913 por William Stanley Jr., quien revolucionó la forma de consumir bebidas calientes al inventar el primer termo de acero inoxidable con aislamiento al vacío. Desde entonces, hemos sido parte de innumerables aventuras y momentos compartidos, ofreciendo productos que garantizan la calidad y durabilidad que nuestros clientes esperan.</p>
+    
+    <h2>Nuestra Misión</h2>
+    <p>Nuestra misión es aumentar el tiempo que las personas pasan al aire libre, proporcionando productos confiables que acompañen cada aventura, desde el primer café de la mañana hasta el último sorbo de una bebida fría al atardecer.</p>
+
+    <h2>Compromiso con la Sostenibilidad</h2>
+    <p>En Stanley, creemos en la fabricación responsable. Todos nuestros productos están diseñados para durar toda la vida, reduciendo así la necesidad de productos desechables. Utilizamos acero reciclable y trabajamos arduamente para minimizar nuestra huella ambiental a través de prácticas sostenibles en toda nuestra cadena de suministro.</p>
+
+    <h2>Innovación Continua</h2>
+    <p>A lo largo de más de 100 años, hemos liderado la industria con innovaciones que mejoran la experiencia del usuario. Desde termos diseñados para mantener tus bebidas a la temperatura perfecta hasta soluciones modernas para el almacenamiento de alimentos y bebidas, cada producto Stanley es un testimonio de nuestro compromiso con la calidad.</p>
+</div>
+
+<div class="container section">
+    <h2>Únete a Nuestra Comunidad</h2>
+    <p>Te invitamos a ser parte de nuestra comunidad Stanley. Comparte tus aventuras con nuestros productos y descubre cómo otros disfrutan del aire libre con estilo y funcionalidad.</p>
+    
+    <div class="text-center">
+        <a href="{% url 'contacto' %}" class="btn btn-primary">Contáctanos</a>
+        <a href="{% url 'visualizar' %}" class="btn btn-secondary">Explora Nuestros Productos</a>
+    </div>
+</div>
+{% endblock %}

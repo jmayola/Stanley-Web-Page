@@ -1,0 +1,82 @@
+{% extends 'index.html' %}
+
+{% load static %}
+{% load django_template_maths %}
+{% block intermedio %}
+{% endblock %}
+
+<!-- Main -->
+{% block cuerpo %}
+<div class="container mt-5">
+    <h2 class="text-center">Proceso de Pago</h2>
+    {% if product %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">{{ product.producto.nom_producto }}</h4>
+                <p class="card-text">Precio: ${{ product.producto.precio_producto }}</p>
+                <p class="card-text">Cantidad: {{ product.cantidad }}</p>
+                <p class="card-text">Total: ${{ total }}</p>
+            </div>
+        </div>
+    {% elif products %}
+        {% for product in products %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">{{ product.producto.nom_producto }}</h4>
+                    <p class="card-text">Precio: ${{ product.producto.precio_producto }}</p>
+                    <p class="card-text">Cantidad: {{ product.cantidad }}</p>
+                    <p class="card-text">Total: ${{ total }}{{product.cantidad|mul:product.producto.precio_producto}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Botón para iniciar el pago con Mercado Pago -->
+    <div class="text-center">
+        <button id="pay-button" class="btn btn-success">Pagar con Mercado Pago</button>
+        {% if products %}
+        <form action="{% url 'comprar_todo_carrito' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="{{product.cantidad}}" id="">
+            <button type="submit" class="btn w-50 btn-danger" style="margin-top:20px; border-bottom: 2px solid #000">Pago Multiple</button>
+        </form>
+        {% else %}
+        <form action="{% url 'comprar' product.producto.id_producto product.pk_carritodet %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="quantity" value="{{product.cantidad}}" id="">
+            <button type="submit" class="btn w-50 btn-danger" style="margin-top:20px; border-bottom: 2px solid #000">Pago Simple</button>
+        </form>
+        {% endif %}
+        <a href="{% url 'carrito' %}" class="btn w-50" style="margin-top:20px; border-bottom: 2px solid #000">Volver</a>
+    </div>
+
+    <!-- Script para integrar Mercado Pago -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script>
+        const mp = new MercadoPago('APP_USR-822c7e6d-91ce-4bc7-ad4f-fc0753876ecc', {
+            locale: 'es-AR'
+        });
+
+        document.getElementById('pay-button').addEventListener('click', function() {
+            // Aquí debes crear el preferencia en tu backend y obtener el ID de preferencia
+            fetch('/create_preference/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    // Aquí puedes enviar los detalles del producto o productos a comprar
+                    products: {% if product %} [{ "nom_producto": "{{ product.producto.nom_producto }}", "quantity": {{ product.cantidad }},"precio_producto":{{product.producto.precio_producto}} }] {% else %} [{% for p in products %}{"nom_producto": "{{ p.producto.nom_producto }}", "quantity": {{ p.cantidad }},"precio_producto":{{p.producto.precio_producto}} }{% if not forloop.last %}, {% endif %}{% endfor %}] {% endif %}
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Redirigir al usuario a la URL de pago proporcionada por Mercado Pago
+                window.location.href = data.init_point;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</div>
+{% endblock %}

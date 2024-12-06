@@ -1,23 +1,28 @@
 {% extends 'index.html' %}
 
-    {% load static %}
+{% load static %}
+{% load crispy_forms_tags %}  
 
-    {% block intermedio %}
-        <img src="{% static 'img/Intermedio/intermedio_gif.gif' %}" alt="Carrousel" class="principal_intermedio">
-    {% endblock %}
+{% block intermedio %}
+{% endblock %}
+{% block cuerpo %}
+<div class="container mt-5">
+    <form action="" method="post" enctype="multipart/form-data">
+        <h1 class="text-center mb-4">Complete los Datos</h1>
+        {% csrf_token %}
+        
+        <div class="mb-3 contenedor_forms">
+            {{ forms|crispy }}  <!-- Asumiendo que 'forms' contiene campos de formulario generados -->
+        </div>
 
-    {% block cuerpo %}
-    <div class="contendor_agregar">
-
-        <img src="{% static 'img/Agregar/img_agregar_forms.gif' %}" alt="">
-
-        <form action="" method="post" enctype="multipart/form-data">
-            <h1>Complete los Datos</h1>
-                {{forms}}
-                {% csrf_token %} 
-                <input type="submit" value="Modificar" class="btn btn-warning">
-                <a href=""><input type="submit" value="Ver Producto" class="btn btn-secondary"></a>
-                <p class="maldonado">{{mensaje}}</p>
-            </form>
-    </div>
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Modificar" class="btn btn-warning" style="margin: 10px;">
+            <a href="{% url 'visualizar' %}" class="btn btn-secondary" style="margin: 10px;">Ver Producto</a>
+        </div>
+        
+        {% if mensaje %}
+        <p class="text-danger text-center mt-3">{{ mensaje }}</p>
+        {% endif %}
+    </form>
+</div>
 {% endblock %}

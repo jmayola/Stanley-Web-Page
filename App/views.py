@@ -35,13 +35,12 @@ def ver_Productos(request):
     }
     return render(request,'Pages/visualizar.html',data)
 
-def verMas(request,id_producto):
-    buscar=Productos.objects.filter(id_producto=id_producto)
-    data={
-        'forms':buscar
+def verMas(request, id_producto):
+    buscar = get_object_or_404(Productos, id_producto=id_producto)
+    data = {
+        'producto': buscar  
     }
-    return render(request,'Pages/vermas.html',data)
-
+    return render(request, 'Pages/vermas.html', data)
 @login_required
 
 @permission_required('App.add_personajes')
@@ -80,9 +79,9 @@ def Modificar_Productos(request,id_producto):
 def Eliminar_Productos(request,id_producto):
     buscar=get_object_or_404(Productos,id_producto=id_producto)
     buscar.delete()
-    return redirect(to="visualizar")
+    return redirect(to="carrito")
 
-
+@login_required
 def salir(request):
     logout(request)
     return redirect(to='inicio')
@@ -92,15 +91,18 @@ def AgregarCarrito (request,id_producto):
     try:
         usuario = User.objects.get_by_natural_key(request.user.username)
         carrito = Carrito.objects.get(user=usuario)
-        Carrito_detalle.objects.create(carrito_det=carrito,producto=get_object_or_404(Productos,id_producto=id_producto),cantidad=1)
+        Carrito_detalle.objects.create(carrito_det=carrito,producto=get_object_or_404(Productos,id_producto=id_producto),cantidad=request.POST["quantity"])
         return redirect("inicio")
     except Carrito.DoesNotExist:
             try:
                 NCarr = Carrito(user=usuario)
                 NCarr.save()
+                return redirect("inicio")
             except NCarr.DoesNotExist as e:
                 print(e)
                 return redirect("inicio")
+            
+@login_required
 def VerCarrito (request):
     sql = Carrito_detalle.objects.select_related('carrito_det','producto').all().filter(carrito_det__user=request.user.id)
     try:
@@ -112,10 +114,52 @@ def VerCarrito (request):
         return render(request,"Pages/carrito.html",data)
     except Carrito_detalle.DoesNotExist:
         return render (request,"index.html",{"data":"Carrito no encontrado"})
+    
+@login_required
 def EliminarCarrito (request,pk_carritodet):
     buscar=get_object_or_404(Carrito_detalle,pk_carritodet=pk_carritodet)
     buscar.delete()
-    return redirect(to="visualizar")
+    return redirect(to="carrito")
+
+@login_required
+def ModificarCantidad(request, pk_carritodet):
+    if request.method == 'POST':
+        nueva_cantidad = int(request.POST['quantity'])
+        carrito_detalle = get_object_or_404(Carrito_detalle, pk_carritodet=pk_carritodet)
+
+        # Validar que la nueva cantidad no exceda el stock
+        if nueva_cantidad <= carrito_detalle.producto.stock_producto:
+            carrito_detalle.cantidad = nueva_cantidad
+            carrito_detalle.save()
+            return redirect('carrito')
+        else:
+            # manejar el caso donde la cantidad excede el stock
+            messages.error(request, f"Lo siento, no hay stock disponible para {carrito_detalle.producto.nom_producto}.")
+            return render(request, 'Pages/sin_stock.html', {'producto': carrito_detalle.producto})
+@login_required
+def payment(request, pk_carritodet=None):
+    if pk_carritodet:  # si se proporciona pk_carritodet, se compra un solo producto
+        carrito_detalle = get_object_or_404(Carrito_detalle, pk_carritodet=pk_carritodet)
+        cantidad = carrito_detalle.cantidad
+        if cantidad <= carrito_detalle.producto.stock_producto:
+            total = carrito_detalle.cantidad * carrito_detalle.producto.precio_producto
+            return render(request, "Pages/payment.html", {"product": carrito_detalle, "total": total})
+        else:
+            messages.error(request, f"Lo siento, no hay stock disponible para {carrito_detalle.producto.nom_producto}.")
+            return render(request, 'Pages/sin_stock.html', {'producto': carrito_detalle.producto})
+    else:  #si no se proporciona pk_carritodet, se compran todos los productos del carrito
+        usuario = request.user
+        carrito = get_object_or_404(Carrito, user=usuario)
+        detalles = Carrito_detalle.objects.filter(carrito_det=carrito)
+
+        #verificar el stock de cada producto
+        for detalle in detalles:
+            if detalle.cantidad > detalle.producto.stock_producto:
+                messages.error(request, f"Lo siento, no hay stock disponible para {detalle.producto.nom_producto}.")
+                return render(request, 'Pages/sin_stock.html', {'producto': detalle.producto})
+
+        # Si todo está en orden, renderiza la página de pago
+        return render(request, "Pages/payment.html", {"products": detalles})
 @login_required
 def comprar_todo_carrito(request):
     # Obtener el carrito del usuario autenticado
@@ -138,14 +182,15 @@ def comprar_todo_carrito(request):
             # Crear la compra
             try:
                 print((producto.nom_producto,detalle.cantidad,producto.precio_producto))
-                # compra = Compra.objects.create(
-                    # usuario=request.user,
-                    # producto=producto,
-                    # cantidad=detalle.cantidad,
-                    # precio_total=producto.precio_producto * detalle.cantidad
-                # )
-                # producto.save()  # Guardar el cambio en el stock
-                # resultados_compra.append(f"Has comprado {detalle.cantidad} de {producto.nom_producto} con éxito.")
+                compra = Compra.objects.create(
+                   usuario=request.user,
+                   producto=producto,
+                   cantidad=detalle.cantidad,
+                   precio_total=producto.precio_producto * detalle.cantidad
+                )
+                producto.save()
+                compra.save()  # Guardar el cambio en el stock
+                resultados_compra.append(f"Has comprado {detalle.cantidad} de {producto.nom_producto} con éxito.")
             except Exception as e:
                 print(e)
                 resultados_compra.append(f"No se ha podido comprar {producto.nom_producto}.")
@@ -153,7 +198,7 @@ def comprar_todo_carrito(request):
             resultados_compra.append(f"Lo siento, no hay suficiente stock para {producto.nom_producto}.")
 
     # Limpiar el carrito después de la compra
-    # detalles_carrito.delete()
+    detalles_carrito.delete()
 
     # Mensaje final sobre la compra
     if resultados_compra:
@@ -204,9 +249,16 @@ def Gmail(request):
     return render(request, 'Pages/contacto.html')  # Asegúrate de tener una plantilla para el formulario
 def Contacto (request):
     return render(request,"Pages/contacto.html")
-def comprar_producto(request, id_producto,cantidad):
-    producto = get_object_or_404(Productos, id_producto=id_producto)  # Busca el producto por código
+def Nosotros (request):
+    return render(request,"Pages/nosotros.html")
 
+@login_required
+def user_profile(request):
+    return render(request, 'Pages/user_profile.html', {'user': request.user})
+
+def comprar_producto(request, id_producto,pk_carritodet):
+    producto = get_object_or_404(Productos, id_producto=id_producto)  # Busca el producto por código
+    cantidad = request.POST["quantity"]
     # Simulamos la compra verificando el stock disponible
     if producto.stock_producto > 0:
         producto.stock_producto -= int(cantidad)
@@ -216,12 +268,23 @@ def comprar_producto(request, id_producto,cantidad):
             compra = Compra.objects.create(
                 usuario=request.user,  # Usuario autenticado
                 producto=producto,    
-                cantidad=1,          
+                cantidad=cantidad,          
                 precio_total=int(producto.precio_producto) * int(cantidad) # El precio total es igual al precio del producto
             )
             producto.save()  
             compra.save()  # Guardar la compra en la base de datos
+            detalles_carrito = get_object_or_404(Carrito_detalle, pk_carritodet=pk_carritodet)
+            detalles_carrito.delete()
+            plantilla = render_to_string("Pages/confirmacion_compra.html", {
+            'producto': producto,
+            'compra': compra,
+            }, request=request)
 
+            contenido = EmailMessage(
+                "Compra Confirmada - Stanley", plantilla, settings.EMAIL_HOST_USER, [request.user.email]
+            )
+            contenido.content_subtype = "html"
+            contenido.send(fail_silently=True)
             messages.success(request, f"Has comprado {producto.nom_producto} con éxito.")
             return render(request, 'Pages/confirmacion_compra.html', {'producto': producto, 'compra':compra})
         except Exception as e:

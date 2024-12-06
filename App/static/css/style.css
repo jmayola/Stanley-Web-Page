@@ -53,17 +53,34 @@
     padding: 20px;
 }
 
-.intermedio img {
-    height: 75vh; 
-    width: 100%; 
-    object-fit: cover;
-}
-
 .principal_intermedio {
     filter: contrast(120%); 
     height: auto; 
 }
-
+.contenedor_forms {
+    display: flex;
+    flex-direction: column;
+}
+.contenedor_forms textarea{
+    max-width: 50vw;
+    height: 10vh;
+    min-height: 5vh;
+    max-height: 20vh;
+    resize: vertical;
+    border-radius: 30px;
+    text-align: center;
+}
+.contenedor_forms input{
+    max-width: 50vw;
+    height: 10vh;
+    resize: vertical;
+    border: 2px solid gray;
+    border-radius: 30px;
+    text-align: center;
+}
+.contenedor_forms label{
+    text-align: center;
+}
 
 .contenedor_index {
     display: flex;

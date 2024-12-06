@@ -1,24 +1,31 @@
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 import mercadopago
+import json
 from dotenv import load_dotenv
-import os 
+from os import getenv
 load_dotenv()
-# Agrega credenciales
-PROD_ACCESS_TOKEN = os.getenv("PROD_ACCESS_TOKEN")
-sdk = mercadopago.SDK(PROD_ACCESS_TOKEN)
-
-# Crea un ítem en la preferencia
-def gePreferenceId(items):
-    # [
-    #         {
-    #             "title": "Mi producto",
-    #             "quantity": 1,
-    #             "unit_price": 75.76,
-    #         }
-    #     ]
-    preference_data = {
-        "items": items
-    }
-
-    preference_response = sdk.preference().create(preference_data)
-    preference = preference_response["response"]
-    return preference
+@csrf_exempt
+def create_preference(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        mp = mercadopago.SDK(getenv("ACCESS_TOKEN"))
+        
+        preference_data = {
+            "items": [{
+                "title": item["nom_producto"],
+                "quantity": item['quantity'],
+                "unit_price": item['precio_producto']
+            } for item in data['products']],
+            "back_urls": {
+                "success": "https://www.stanley.mayola.net.ar/success.html",
+                "failure": "https://www.stanley.mayola.net.ar/failure.html",
+                "pending": "https://www.stanley.mayola.net.ar/pending.html"
+            },
+            "auto_return": "approved"
+        }
+        
+        preference_response = mp.preference().create(preference_data)
+        
+        return JsonResponse({"init_point": preference_response["response"]["init_point"]})

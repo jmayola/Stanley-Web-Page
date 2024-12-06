@@ -21,8 +21,8 @@
                 <div class="card-body" style="display: flex;flex-direction: column;place-content: center; justify-content: space-between">
                   <br>
                   <div>
-                  <h4 class="card-title">Nombre: {{i.nom_producto}}</h4>
-                  <h5 class="card-title">Precio: {{i.precio_producto}}</h5>
+                  <h4 class="card-title">{{i.nom_producto}}</h4>
+                  <h5 class="card-title">Precio: ${{i.precio_producto}}</h5>
                   {% if i.stock_producto > 1 %}
                   <a
                   href="{% url 'vermas' i.id_producto %}"

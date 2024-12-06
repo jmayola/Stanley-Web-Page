@@ -21,14 +21,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2(y@l#3n6)(g!^3)z%93@o_3nqdh(u)@u_dnc=fdo$vez3r*)#'
+SECRET_KEY = '1983ufj9ijsc07qy4tnnBX)&#$Tx76b18TX)B&T$/&X"YTge72bxte128NT/"&32(y@l#3n6)(g!^3)z%93@o_3nqdh(u)@u_dnc=fdo$vez3r*)#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# ALLOWED_HOSTS = ["mayola.net.ar",".mayola.net.ar"]
 
-ALLOWED_HOSTS = []
-
-
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CONN_MAX_AGE = 100
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +43,9 @@ INSTALLED_APPS = [
     'App',
     'ckeditor',
     'widget_tweaks',
+    "crispy_forms",
+    "django_template_maths",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -146,3 +151,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'julianmayola131@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")  # Generada desde Google
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"

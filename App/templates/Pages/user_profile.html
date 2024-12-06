@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block intermedio %}
+{% endblock %}
+
+{% block cuerpo %}
+<div class="container my-5">
+    <div class="profile-container shadow p-4 rounded">
+        <h2 class="text-center text-primary mb-4">Perfil de Usuario</h2>
+        
+        <div class="mb-3">
+            <label class="form-label"><strong>Nombre:</strong></label>
+            <p class="border p-2 rounded bg-light">{{ user.username|default:"No disponible" }}</p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><strong>Email:</strong></label>
+            <p class="border p-2 rounded bg-light">{{ user.email }}</p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><strong>Fecha de Registro:</strong></label>
+            <p class="border p-2 rounded bg-light">{{ user.date_joined|date:"D d M Y" }}</p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label"><strong>Último Inicio de Sesión:</strong></label>
+            <p class="border p-2 rounded bg-light">{{ user.last_login|date:"D d M Y H:i" }}</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Color de fondo suave */
+    }
+    .profile-container {
+        background-color: #ffffff; /* Fondo blanco para el perfil */
+    }
+    h2 {
+        font-weight: bold;
+    }
+</style>
+
+{% endblock %}

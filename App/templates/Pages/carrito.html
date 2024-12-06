@@ -7,47 +7,43 @@
 
 <!-- Main -->
 {% block cuerpo %}
-    <div class="contenedor_visualizar">
-        {% if forms|length >= 1 %}
-            {% for i in forms %}
-                <div class="card" style="width: 18rem;">
-                    <!-- Pasamos la Ruta de la Imagen Registrada -->
-                    <img src="{{ i.producto.imagen_producto.url }}" class="card-img-top" alt="Imagen BD">
-                    <div class="card-body">
-                        <h4 class="card-title">Nombre: {{ i.producto.nom_producto }}</h4>
-                        <h5 class="card-text">${{ i.producto.precio_producto }}</h5>
-                        <h5 class="card-text">Cantidad: {{ i.cantidad }}</h5>
+    <div class="d-flex justify-content-between">
+        <div class="contenedor_visualizar d-flex flex-wrap">
+            {% if forms|length >= 1 %}
+                {% for i in forms %}
+                    <div class="card m-2" style="width: 18rem;">
+                        <img src="{{ i.producto.imagen_producto.url }}" class="card-img-top" alt="Imagen BD">
+                        <div class="card-body">
+                            <h4 class="card-title">Nombre: {{ i.producto.nom_producto }}</h4>
+                            <h5 class="card-text">${{ i.producto.precio_producto }}</h5>
+                            <h5 class="card-text">Cantidad: {{ i.cantidad }}</h5>
+                            <a href="{% url 'payment' i.pk_carritodet  %}" class='btn btn-warning shadow-0'> Comprar </a>
+                        </div>
+                        <form action="{% url 'modificar_cantidad' i.pk_carritodet %}" method="post">
+                            {% csrf_token %}
+                            <input type="number" name="quantity" value="{{ i.cantidad }}" min="1" max="{{ i.producto.stock }}" required class="form-control mb-2">
+                            <button type="submit" class="btn btn-primary">Modificar Cantidad</button>
+                        </form>
+                        <a class="btn" href="{% url 'carritoE' i.pk_carritodet %}">Eliminar</a>
                     </div>
-                    <a
-                        id=""
-                        class="btn btn-danger"
-                        href="{% url 'carritoE' i.pk_carritodet %}"
-                        role="button"
-                    >Eliminar</a>
+                {% endfor %}
+            {% else %}
+                <div class="card m-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">No tienes productos añadidos al carrito!</h5>
+                        <h5 class="card-title">Dirígete a la zona de productos para poder comenzar a comprar.</h5>
+                    </div>
+                    <a class="btn btn-danger" href="{% url 'visualizar' %}" role="button">Ver Productos</a>
                 </div>
-            {% endfor %}
-            <!-- Botón para comprar todo el carrito -->
-            <div class="text-center mt-4" style="width: 18rem; display: flex; place-content: center; flex-direction: column; margin-left: 3rem; justify-content: space-between; background-color: #e0e0e0; padding: 2rem;">
-                <h4 class="subtitulo_index" style="border-bottom-width: 4px; border-left: 0px;border-top: 0px;border-right: 0px; border-color: #2b2b2b; border-style: solid;">Pagar</h4>
-                <form action="{% url 'comprar_todo_carrito' %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-success">Comprar Todo el Carrito</button>
-                </form>
+            {% endif %}
+        </div>
+
+        <!-- Botón para comprar todo el carrito -->
+        <div class="d-flex align-items-center" style="background-color: #f2f2f2; border-radius: 30px; padding: 0px 30px 0 30px;">
+            <div class="text-center mt-4">
+                <h4 class="subtitulo_index mb-3" style="border-bottom: 2px solid #2b2b2b;">Pagar</h4>
+                    <a href="{% url 'paymentfull' %}" class='btn btn-success'> Comprar Todo el Carrito </a>
             </div>
-        {% else %}
-            <div class="card" style="width: 18rem;">
-                <img src="{% static 'img/logo.png' %}" class="card-img-top" alt="Imagen BD">
-                <div class="card-body">
-                    <h5 class="card-title">No tienes productos añadidos al carrito!</h5>
-                    <h5 class="card-title">Dirígete a la zona de productos para poder comenzar a comprar.</h5>
-                </div>
-                <a
-                    id=""
-                    class="btn btn-danger"
-                    href="{% url 'visualizar' %}"
-                    role="button"
-                >Ver Productos</a>
-            </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}
